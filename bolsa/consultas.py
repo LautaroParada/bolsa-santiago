@@ -7,6 +7,7 @@ Created on Wed Feb 17 15:26:46 2021
 
 import requests
 import json
+from typing import Dict
 
 class ConsultasAPI(object):
     
@@ -24,19 +25,15 @@ class ConsultasAPI(object):
             'access_token': self.token
             }
         
-        self.has_model = False
         self.endpoint_pivot = None
         
     # ------------------------------
     # Metodos para eliminar la redundancia en el cliente
     # ------------------------------
         
-    def __handle_response(self, **kwargs):
+    def __handle_response(self, query_params: Dict[str, str]={}):
         
-        if self.has_model:
-            resp = requests.post(self.endpoint_pivot, params=self.params, headers=self.headers)
-        else:
-            resp = requests.post(self.endpoint_pivot, params=self.params, headers=self.headers, json=kwargs)
+        resp = requests.post(self.endpoint_pivot, params=self.params, headers=self.headers, json=query_params, timeout=self.timeout)
             
         if resp.status_code == 200:
              if 'listaResult' in resp.json().keys():
@@ -93,3 +90,7 @@ class ConsultasAPI(object):
     def get_indices(self):
         self.__endpoint_builder("TickerOnDemand/getIndices")
         return self.__handle_response()
+    
+    def get_resumen_accion(self, **query_params):
+        self.__endpoint_builder("TickerOnDemand/getResumenAccion")
+        return self.__handle_response(query_params)
