@@ -6,76 +6,24 @@ Created on Tue Feb 16 13:59:33 2021
 """
 
 import os
-import json
-import requests
 
-from bolsa.consultas import ConsultasAPI, NegociacionAPI
-
+from bolsa.consultas import ConsultasAPI
+from bolsa.negociacion import NegociacionAPI
 
 #%% Request the data
 api_key = os.environ['API_BS']
 
-#%% Instrumentos Disponibles
+#%% Consulta
+con_bs = ConsultasAPI(token=api_key)
 
-host = 'https://startup.bolsadesantiago.com/api/consulta/'
+resp = con_bs.get_instrumentos_validos()
+print('Instrumentos validos')
+print(resp)
+print('-'*70)
+resp = con_bs.get_request_usuario()
+print('Request usuario')
+print(resp)
+print('-'*70)
 
-headers = {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
-    }
-
-params = {
-    'access_token': api_key
-    }
-
-def info_request(resp):
-    resp_ = resp.json()
-    print(json.dumps(resp_, indent=4))
-    print(resp.headers)
-    print(f"Status of the request {resp.status_code}")
-    print('-'*50)
-
-# #%% Instrumentos Disponibles
-r = requests.post(host+'InstrumentosDisponibles/getInstrumentosValidos', params=params, headers=headers)
-info_request(r)
-
-# #%% Request Usuario
-
-# r = requests.post(host + 'RequestUsuario/getRequestUsuario', params=params, headers=headers)
-# info_request(r)
-
-# #%% Ticker on Demand - PROBLEMA CON EL NEMO
-
-# # Indices
-# r = requests.post(host + 'TickerOnDemand/getIndices', params=params, headers=headers)
-
-# info_request(r)
-
-# # Resumen de accion
-payload = {
-    "Nemo": "VAPORES"
-    }
-r = requests.post(host + 'TickerOnDemand/getResumenAccion', json=payload, params=params, headers=headers)
-
-info_request(r)
-
-# # Variaciones de Capital
-
-
-# #%% Cliente Market Data
-
-# # Indices
-# r = requests.post(host + 'ClienteMD/getIndicesRV', params=params, headers=headers)
-# info_request(r)
-
-# # Instrumentos
-# r = requests.post(host + 'ClienteMD/getInstrumentosRV', params=params, headers=headers)
-# info_request(r)
-
-# # Puntas de RV
-# r = requests.post(host + 'ClienteMD/getPuntasRV', params=params, headers=headers)
-# info_request(r)
-
-# # Transacciones
-# r = requests.post(host + 'ClienteMD/getTransaccionesRV', params=params, headers=headers)
-# info_request(r)
+#%% Negociacion
+neg_bs = NegociacionAPI(token=api_key)

@@ -40,8 +40,20 @@ class ConsultasAPI(object):
                  return resp.json()
         else:
             resp.raise_for_status()
+            
+            
+    # ------------------------------
+    # Instrumentos Disponibles
+    # ------------------------------
     
     def get_instrumentos_validos(self):
         endpoint = f"{self.CONSULTA_HOST}/InstrumentosDisponibles/getInstrumentosValidos"
         return self.__handle_response(endpoint)
-        
+    
+    # ------------------------------
+    # Request Usuario
+    # ------------------------------
+    
+    def get_request_usuario(self):
+        endpoint = f"{self.CONSULTA_HOST}/RequestUsuario/getRequestUsuario"
+        return self.__handle_response(endpoint)
