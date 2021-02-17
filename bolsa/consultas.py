@@ -85,3 +85,11 @@ class ConsultasAPI(object):
     def get_transacciones_rv(self):
         self.__endpoint_builder("ClienteMD/getTransaccionesRV")
         return self.__handle_response()
+    
+    # ------------------------------
+    # Ticker on Demand
+    # ------------------------------
+    
+    def get_indices(self):
+        self.__endpoint_builder("TickerOnDemand/getIndices")
+        return self.__handle_response()
