@@ -6,51 +6,38 @@ Created on Tue Feb 16 13:59:33 2021
 """
 
 import os
-from bolsa import RESTCliente
-
 import json
 import requests
+
+from bolsa.consultas import ConsultasAPI, NegociacionAPI
+
 
 #%% Request the data
 api_key = os.environ['API_BS']
 
-bs = RESTCliente(token=api_key)
-r = bs.id_instrumentos_validos()
-
 #%% Instrumentos Disponibles
 
+host = 'https://startup.bolsadesantiago.com/api/consulta/'
 
+headers = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+    }
 
+params = {
+    'access_token': api_key
+    }
 
-
-
-
-
-
-
-
-
-# host = 'https://startup.bolsadesantiago.com/api/consulta/'
-
-# headers = {
-#     'Content-Type': 'application/json',
-#     'Accept': 'application/json'
-#     }
-
-# params = {
-#     'access_token': api_key
-#     }
-
-# def info_request(resp):
-#     resp_ = resp.json()
-#     print(json.dumps(resp_, indent=4))
-#     print(resp.headers)
-#     print(f"Status of the request {resp.status_code}")
-#     print('-'*50)
+def info_request(resp):
+    resp_ = resp.json()
+    print(json.dumps(resp_, indent=4))
+    print(resp.headers)
+    print(f"Status of the request {resp.status_code}")
+    print('-'*50)
 
 # #%% Instrumentos Disponibles
-# r = requests.post(host+'InstrumentosDisponibles/getInstrumentosValidos', params=params, headers=headers)
-# info_request(r)
+r = requests.post(host+'InstrumentosDisponibles/getInstrumentosValidos', params=params, headers=headers)
+info_request(r)
 
 # #%% Request Usuario
 
@@ -65,12 +52,12 @@ r = bs.id_instrumentos_validos()
 # info_request(r)
 
 # # Resumen de accion
-# payload = {
-#     "nemo": "CCU"
-#     }
-# r = requests.post(host + 'TickerOnDemand/getResumenAccion', data=payload, params=params, headers=headers)
+payload = {
+    "Nemo": "VAPORES"
+    }
+r = requests.post(host + 'TickerOnDemand/getResumenAccion', json=payload, params=params, headers=headers)
 
-# info_request(r)
+info_request(r)
 
 # # Variaciones de Capital
 
