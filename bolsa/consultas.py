@@ -57,3 +57,11 @@ class ConsultasAPI(object):
     def get_request_usuario(self):
         endpoint = f"{self.CONSULTA_HOST}/RequestUsuario/getRequestUsuario"
         return self.__handle_response(endpoint)
+    
+    # ------------------------------
+    # Cliente Market Data
+    # ------------------------------
+    
+    def get_indices_rv(self):
+        endpoint = f"{self.CONSULTA_HOST}/ClienteMD/getIndicesRV"
+        return self.__handle_response(endpoint)
