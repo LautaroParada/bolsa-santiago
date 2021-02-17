@@ -27,6 +27,10 @@ class ConsultasAPI(object):
         self.has_model = False
         self.endpoint_pivot = None
         
+    # ------------------------------
+    # Metodos para eliminar la redundancia en el cliente
+    # ------------------------------
+        
     def __handle_response(self, **kwargs):
         
         if self.has_model:
@@ -76,4 +80,8 @@ class ConsultasAPI(object):
     
     def get_puntas_rv(self):
         self.__endpoint_builder("ClienteMD/getPuntasRV")
+        return self.__handle_response()
+    
+    def get_transacciones_rv(self):
+        self.__endpoint_builder("ClienteMD/getTransaccionesRV")
         return self.__handle_response()

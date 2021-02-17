@@ -36,7 +36,10 @@ resp = con_bs.get_puntas_rv()
 print('Puntas de renta variable')
 print(resp)
 print('-'*70)
-
+resp = con_bs.get_transacciones_rv()
+print('Transacciones de renta variable')
+print(resp)
+print('-'*70)
 
 #%% Negociacion
 neg_bs = NegociacionAPI(token=api_key)
