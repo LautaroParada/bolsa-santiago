@@ -32,6 +32,10 @@ resp = con_bs.get_instrumentos_rv()
 print('Instrumentos de renta variable')
 print(resp)
 print('-'*70)
+resp = con_bs.get_puntas_rv()
+print('Puntas de renta variable')
+print(resp)
+print('-'*70)
 
 
 #%% Negociacion

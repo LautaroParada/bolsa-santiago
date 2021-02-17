@@ -25,13 +25,14 @@ class ConsultasAPI(object):
             }
         
         self.has_model = False
+        self.endpoint_pivot = None
         
-    def __handle_response(self, endpoint: str, **kwargs):
+    def __handle_response(self, **kwargs):
         
         if self.has_model:
-            resp = requests.post(endpoint, params=self.params, headers=self.headers)
+            resp = requests.post(self.endpoint_pivot, params=self.params, headers=self.headers)
         else:
-            resp = requests.post(endpoint, params=self.params, headers=self.headers, json=kwargs)
+            resp = requests.post(self.endpoint_pivot, params=self.params, headers=self.headers, json=kwargs)
             
         if resp.status_code == 200:
              if 'listaResult' in resp.json().keys():
@@ -41,31 +42,38 @@ class ConsultasAPI(object):
         else:
             resp.raise_for_status()
             
+    def __endpoint_builder(self, endpoint):
+        self.endpoint_pivot = f"{self.CONSULTA_HOST}/{endpoint}"
+            
             
     # ------------------------------
     # Instrumentos Disponibles
     # ------------------------------
     
     def get_instrumentos_validos(self):
-        endpoint = f"{self.CONSULTA_HOST}/InstrumentosDisponibles/getInstrumentosValidos"
-        return self.__handle_response(endpoint)
+        self.__endpoint_builder("InstrumentosDisponibles/getInstrumentosValidos")
+        return self.__handle_response()
     
     # ------------------------------
     # Request Usuario
     # ------------------------------
     
     def get_request_usuario(self):
-        endpoint = f"{self.CONSULTA_HOST}/RequestUsuario/getRequestUsuario"
-        return self.__handle_response(endpoint)
+        self.__endpoint_builder("RequestUsuario/getRequestUsuario")
+        return self.__handle_response()
     
     # ------------------------------
     # Cliente Market Data
     # ------------------------------
     
     def get_indices_rv(self):
-        endpoint = f"{self.CONSULTA_HOST}/ClienteMD/getIndicesRV"
-        return self.__handle_response(endpoint)
+        self.__endpoint_builder("ClienteMD/getIndicesRV")
+        return self.__handle_response()
     
     def get_instrumentos_rv(self):
-        endpoint = f"{self.CONSULTA_HOST}/ClienteMD/getInstrumentosRV"
-        return self.__handle_response(endpoint)
+        self.__endpoint_builder("ClienteMD/getInstrumentosRV")
+        return self.__handle_response()
+    
+    def get_puntas_rv(self):
+        self.__endpoint_builder("ClienteMD/getPuntasRV")
+        return self.__handle_response()
