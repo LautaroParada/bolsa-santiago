@@ -65,3 +65,7 @@ class ConsultasAPI(object):
     def get_indices_rv(self):
         endpoint = f"{self.CONSULTA_HOST}/ClienteMD/getIndicesRV"
         return self.__handle_response(endpoint)
+    
+    def get_instrumentos_rv(self):
+        endpoint = f"{self.CONSULTA_HOST}/ClienteMD/getInstrumentosRV"
+        return self.__handle_response(endpoint)
