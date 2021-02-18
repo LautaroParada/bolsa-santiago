@@ -137,3 +137,11 @@ class NegociacionAPI(object):
     def get_transacciones_rv(self):
         self.__endpoint_builder('ClienteMD/getTransaccionesRV')
         return self.__handle_response()
+    
+    # ------------------------------
+    # DMA
+    # ------------------------------
+    def get_revision_ingreso(self):
+        self.__endpoint_builder("DMA/getRevisionIngreso")
+        return self.__handle_response()
+    
