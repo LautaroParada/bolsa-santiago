@@ -108,3 +108,20 @@ class NegociacionAPI(object):
     def get_instrumentos_validos(self):
         self.__endpoint_builder('InstrumentosDisponibles/getInstrumentosValidos')
         return self.__handle_response()
+    
+    # ------------------------------
+    # Request Usuario
+    # ------------------------------
+    
+    def get_request_usuario(self):
+        """
+        Número de solcitudes disponibles a realizar.
+
+        Returns
+        -------
+        dict
+            Consumo actual y límite diario.
+
+        """
+        self.__endpoint_builder("RequestUsuario/getRequestUsuario")
+        return self.__handle_response()
