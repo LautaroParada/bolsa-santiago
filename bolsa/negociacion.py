@@ -145,3 +145,8 @@ class NegociacionAPI(object):
         self.__endpoint_builder("DMA/getRevisionIngreso")
         return self.__handle_response()
     
+    def get_revision_transaccion(self, **query_parameters):
+        self.__endpoint_builder('DMA/getRevisionTransaccion')
+        return self.__handle_response()
+    
+    
