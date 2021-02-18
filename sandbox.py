@@ -5,72 +5,82 @@ Created on Tue Feb 16 13:59:33 2021
 @author: lauta
 """
 
-import requests
-import json
 import os
-from print_dict import pd 
+import numpy as np
+
+from bolsa.consultas import ConsultasAPI
+from bolsa.negociacion import NegociacionAPI
 
 #%% Request the data
 api_key = os.environ['API_BS']
-host = 'https://startup.bolsadesantiago.com/api/consulta/'
 
-headers = {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
-    }
+#%% Consulta
+con_bs = ConsultasAPI(token=api_key)
 
-params = {
-    'access_token': api_key
-    }
+resp = con_bs.get_instrumentos_validos()
+print('Instrumentos validos')
+print(resp)
+print('-'*70)
+resp = con_bs.get_request_usuario()
+print('Request usuario')
+print(resp)
+print('-'*70)
+resp = con_bs.get_indices_rv()
+print('Indices de renta variable')
+print(resp)
+print('-'*70)
+resp = con_bs.get_instrumentos_rv()
+print('Instrumentos de renta variable')
+print(resp)
+print('-'*70)
+resp = con_bs.get_puntas_rv()
+print('Puntas de renta variable')
+print(resp)
+print('-'*70)
+resp = con_bs.get_transacciones_rv()
+print('Transacciones de renta variable')
+print(resp)
+print('-'*70)
+resp = con_bs.get_indices()
+print('Indices de la Bolsa de Santiago')
+print(resp)
+print('-'*70)
+# Get random ticket from the available instruments
+ticker = con_bs.get_instrumentos_validos()[np.random.choice([0,5])]['NEMO']
+resp = con_bs.get_resumen_accion(Nemo=ticker)
+print(f'Resumen de la accion de {ticker}')
+print(resp)
+print('-'*70)
+resp = con_bs.get_variaciones_capital(Nemo=ticker, Fecha_Desde='2021020111000000', Fecha_Hasta='2021020411000000')
+print(f'Variacion de capital para {ticker}')
+print(resp)
+print('-'*70)
+print('\n')
 
-def info_request(resp):
-    resp_ = resp.json()
-    print(json.dumps(resp_, indent=4))
-    pd(resp.headers)
-    print(f"Status of the request {resp.status_code}")
-    print('-'*50)
+#%% Negociacion
+neg_bs = NegociacionAPI(token=api_key)
 
-#%% Instrumentos Disponibles
-r = requests.post(host+'InstrumentosDisponibles/getInstrumentosValidos', params=params, headers=headers)
-info_request(r)
-
-#%% Request Usuario
-
-r = requests.post(host + 'RequestUsuario/getRequestUsuario', params=params, headers=headers)
-info_request(r)
-
-#%% Ticker on Demand - PROBLEMA CON EL NEMO
-
-# Indices
-r = requests.post(host + 'TickerOnDemand/getIndices', params=params, headers=headers)
-
-info_request(r)
-
-# Resumen de accion
-payload = {
-    "nemo": "CCU"
-    }
-r = requests.post(host + 'TickerOnDemand/getResumenAccion', data=payload, params=params, headers=headers)
-
-info_request(r)
-
-# Variaciones de Capital
-
-
-#%% Cliente Market Data
-
-# Indices
-r = requests.post(host + 'ClienteMD/getIndicesRV', params=params, headers=headers)
-info_request(r)
-
-# Instrumentos
-r = requests.post(host + 'ClienteMD/getInstrumentosRV', params=params, headers=headers)
-info_request(r)
-
-# Puntas de RV
-r = requests.post(host + 'ClienteMD/getPuntasRV', params=params, headers=headers)
-info_request(r)
-
-# Transacciones
-r = requests.post(host + 'ClienteMD/getTransaccionesRV', params=params, headers=headers)
-info_request(r)
+resp = neg_bs.get_instrumentos_validos()
+print('Instrumentos validos - NEGOCIACION API')
+print(resp)
+print('-'*70)
+resp = neg_bs.get_request_usuario()
+print('Request usuario - NEGOCIACION API')
+print(resp)
+print('-'*70)
+resp = neg_bs.get_puntas_rv()
+print('Puntas de negociacion para renta variable - NEGOCIACION API')
+print(resp)
+print('-'*70)
+resp = neg_bs.get_transacciones_rv()
+print('Transacciones - NEGOCIACION API')
+print(resp)
+print('-'*70)
+resp = neg_bs.get_revision_ingreso(sec_orden=0)
+print('Revision de ingreso de orden')
+print(resp)
+print('-'*70)
+resp = neg_bs.get_revision_transaccion(sec_orden=9)
+print('Revision de las transacciones')
+print(resp)
+print('-'*70)
