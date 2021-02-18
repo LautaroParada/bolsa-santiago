@@ -93,4 +93,12 @@ class ConsultasAPI(object):
     
     def get_resumen_accion(self, **query_params):
         self.__endpoint_builder("TickerOnDemand/getResumenAccion")
+        
+        # Verificando los parametros del metodo
+        for key, value in query_params.items():
+            if key == 'Nemo':
+                print('El parametro aceptado por el metodo es Nemo')
+                break
+            value = value.upper()
+        
         return self.__handle_response(query_params)
