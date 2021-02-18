@@ -133,3 +133,7 @@ class NegociacionAPI(object):
     def get_puntas_rv(self):
         self.__endpoint_builder('ClienteMD/getPuntasRV')
         return self.__handle_response()
+    
+    def get_transacciones_rv(self):
+        self.__endpoint_builder('ClienteMD/getTransaccionesRV')
+        return self.__handle_response()
