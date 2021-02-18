@@ -51,6 +51,12 @@ resp = con_bs.get_resumen_accion(Nemo=ticker)
 print(f'Resumen de la accion de {ticker}')
 print(resp)
 print('-'*70)
+print('\n')
 
 #%% Negociacion
 neg_bs = NegociacionAPI(token=api_key)
+
+resp = neg_bs.get_instrumentos_validos()
+print('Instrumentos validos')
+print(resp)
+print('-'*70)
