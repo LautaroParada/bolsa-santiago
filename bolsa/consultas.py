@@ -96,9 +96,9 @@ class ConsultasAPI(object):
         
         # Verificando los parametros del metodo
         for key, value in query_params.items():
-            if key == 'Nemo':
+            if key != 'Nemo':
                 print('El parametro aceptado por el metodo es Nemo')
-                break
+                return
             value = value.upper()
         
         return self.__handle_response(query_params)
