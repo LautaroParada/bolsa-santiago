@@ -8,6 +8,7 @@ Created on Wed Feb 17 15:26:46 2021
 import requests
 import json
 from typing import Dict
+import logging
 
 class NegociacionAPI(object):
     """
@@ -136,7 +137,7 @@ class NegociacionAPI(object):
     def __param_checker(self, items_):
         for key, value in items_:
             if key not in self.query_params_names:
-                print(f"El parametro {key} no es valido")
+                logging.error(f"El parametro {key} no es valido")
                 self.name_error = True
         
     # ------------------------------
