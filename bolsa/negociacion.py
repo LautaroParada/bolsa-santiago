@@ -125,3 +125,11 @@ class NegociacionAPI(object):
         """
         self.__endpoint_builder("RequestUsuario/getRequestUsuario")
         return self.__handle_response()
+    
+    # ------------------------------
+    # Cliente Market Data
+    # ------------------------------
+    
+    def get_puntas_rv(self):
+        self.__endpoint_builder('ClienteMD/getPuntasRV')
+        return self.__handle_response()
