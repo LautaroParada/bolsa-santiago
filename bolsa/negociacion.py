@@ -52,8 +52,40 @@ class NegociacionAPI(object):
             'access_token': self.token
             }
         
-        self.has_model = False
-        
+        self.query_params_names = ["in_ruteo",
+                            "out_ruteo",
+                            "procesado",
+                            "sec_orden",
+                            "rut_cli",
+                            "nemo",
+                            "cantidad",
+                            "precio",
+                            "tipo_operac",
+                            "fec_ing_orden",
+                            "ind_validez",
+                            "fec_vcto_validez",
+                            "can_asig_acum",
+                            "estado",
+                            "moneda",
+                            "bolsa",
+                            "condicion_liquidacion",
+                            "sponsoring_firm",
+                            "mercado",
+                            "sub_mercado",
+                            "prepago",
+                            "tasa_maxima",
+                            "tasa_propia",
+                            "id_referencia",
+                            "fecha_vencimiento",
+                            "divisible",
+                            "od",
+                            "sec_orden_od_compra",
+                            "sec_orden_od_venta",
+                            "op_interno",
+                            "sec_orden_2",
+                            "id_cliente"
+                            ]
+        self.name_error = False
     # ------------------------------
     # Metodos para eliminar la redundancia en el cliente
     # ------------------------------
@@ -101,6 +133,12 @@ class NegociacionAPI(object):
         """
         self.endpoint_pivot = f"{self.NEGOCIACION_HOST}/{endpoint}"
         
+    def __param_checker(self, items_):
+        for key, value in items_:
+            if key not in self.query_params_names:
+                print(f"El parametro {key} no es valido")
+                self.name_error = True
+        
     # ------------------------------
     # Instrumentos disponibles en ingreso de ofertas
     # ------------------------------
@@ -141,12 +179,22 @@ class NegociacionAPI(object):
     # ------------------------------
     # DMA
     # ------------------------------
-    def get_revision_ingreso(self):
+    def get_revision_ingreso(self, **query_params):
         self.__endpoint_builder("DMA/getRevisionIngreso")
+        self.__param_checker(items_=query_params.items())
+        
+        if self.name_error:
+            self.name_error = False
+            return
+        
         return self.__handle_response()
     
-    def get_revision_transaccion(self, **query_parameters):
+    def get_revision_transaccion(self, **query_params):
         self.__endpoint_builder('DMA/getRevisionTransaccion')
+        self.__param_checker(items_=query_params.items())
+        
+        if self.name_error:
+            self.name_error = False
+            return
+        
         return self.__handle_response()
-    
-    
