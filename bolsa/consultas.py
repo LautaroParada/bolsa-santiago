@@ -8,6 +8,7 @@ Created on Wed Feb 17 15:26:46 2021
 import requests
 import json
 from typing import Dict
+import logging
 
 class ConsultasAPI(object):
     """
@@ -51,6 +52,13 @@ class ConsultasAPI(object):
             }
         
         self.endpoint_pivot = None
+        
+        self.query_params_names = [
+                "Nemo",
+                "Fecha_Desde",
+                "Fecha_Hasta"
+            ]
+        self.name_error = False
         
     # ------------------------------
     # Metodos para eliminar la redundancia en el cliente
@@ -98,7 +106,12 @@ class ConsultasAPI(object):
 
         """
         self.endpoint_pivot = f"{self.CONSULTA_HOST}/{endpoint}"
-            
+        
+    def __param_checker(self, items_):
+        for key, value in items_:
+            if key not in self.query_params_names:
+                logging.error(f"El parametro {key} no es valido")
+                self.name_error = True
             
     # ------------------------------
     # Instrumentos Disponibles
@@ -237,10 +250,19 @@ class ConsultasAPI(object):
         self.__endpoint_builder("TickerOnDemand/getResumenAccion")
         
         # Verificando los parametros del metodo
-        for key, value in query_params.items():
-            if key != 'Nemo':
-                print('El parametro aceptado por el metodo es Nemo')
-                return
-            value = value.upper()
+        self.__param_checker(items_=query_params.items())
+        
+        if self.name_error:
+            self.name_error = False
+            return
+        
+        return self.__handle_response(query_params)
+    
+    def get_variaciones_capital(self, **query_params):
+        self.__endpoint_builder('TickerOnDemand/getVariacionesCapital')
+        
+        if self.name_error:
+            self.name_error = False
+            return
         
         return self.__handle_response(query_params)

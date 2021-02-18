@@ -51,6 +51,10 @@ resp = con_bs.get_resumen_accion(Nemo=ticker)
 print(f'Resumen de la accion de {ticker}')
 print(resp)
 print('-'*70)
+resp = con_bs.get_variaciones_capital(Nemo=ticker, Fecha_Desde='2021020111000000', Fecha_Hasta='2021020411000000')
+print(f'Variacion de capital para {ticker}')
+print(resp)
+print('-'*70)
 print('\n')
 
 #%% Negociacion
