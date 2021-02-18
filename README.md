@@ -6,13 +6,13 @@ en Python.
 
 **Contents**
 
-1. [Descripcion general](#descripcion-general)
-2. [Instalación y requisitos](#instalacion-y-requisitos)
-3. [Demo Servicios de Consulta](#demo-servicios-de-consulta)
-    - [Documentación servicios de consulta](#documentacion-servicios-de-consulta)
-4. [Demo Servicios de Negociación](#demo-servicios-de-negociacion)
-	- [Documentación servicios de negociacion](#documentacion-servicios-de-negociacion)
-5. [Disclaimer](#disclaimer)
+1. [Descripcion general](#descripcion-general-arrow_up)
+2. [Instalación y requisitos](#instalación-y-requisitos-arrow_up)
+3. [Demo Servicios de Consulta](#demo-servicios-de-consulta-arrow_up)
+    - [Documentación servicios de consulta](#documentación-servicios-de-consulta-arrow_up)
+4. [Demo Servicios de Negociación](#demo-servicios-de-negociación-arrow_up)
+	- [Documentación servicios de negociacion](#documentación-servicios-de-negociacion-arrow_up)
+5. [Disclaimer](#disclaimer-arrow_up)
 
 ## Descripcion general [:arrow_up:](#bolsa-de-santiago-startup-api)
  
