@@ -61,6 +61,9 @@ print('\n')
 neg_bs = NegociacionAPI(token=api_key)
 
 resp = neg_bs.get_instrumentos_validos()
+# muestra aleatoria para el ingreso de ordenes
+nemo_test = resp[np.random.randint(len(resp))]['NEMO']
+nemo_precio = resp[np.random.randint(len(resp))]['PRECIO']
 print('Instrumentos validos - NEGOCIACION API')
 print(resp)
 print('-'*70)
@@ -76,11 +79,13 @@ resp = neg_bs.get_transacciones_rv()
 print('Transacciones - NEGOCIACION API')
 print(resp)
 print('-'*70)
-resp = neg_bs.get_revision_ingreso(sec_orden=0)
-print('Revision de ingreso de orden')
+resp = neg_bs.set_ingreso_oferta(nemo=nemo_test, cantidad=100, 
+                                 precio=nemo_precio, tipo_operac='C', 
+                                 condicion_liquidacion='CN')
+print('Ingreso de orden')
 print(resp)
 print('-'*70)
-resp = neg_bs.get_revision_transaccion(sec_orden=9)
-print('Revision de las transacciones')
+resp = neg_bs.get_revision_ingreso(sec_orden=resp['SEC_ORDEN'])
+print('Revision de ingreso de orden')
 print(resp)
 print('-'*70)

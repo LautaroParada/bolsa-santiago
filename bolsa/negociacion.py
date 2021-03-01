@@ -43,6 +43,7 @@ class NegociacionAPI(object):
         self.token = token
         self.timeout = timeout
         self.NEGOCIACION_HOST = 'https://startup.bolsadesantiago.com/api/negociacion'
+        self.resp = None
         
         self.headers = {
             'Content-Type': 'application/json',
@@ -86,6 +87,41 @@ class NegociacionAPI(object):
                             "sec_orden_2",
                             "id_cliente"
                             ]
+        
+        self.order_model_json = {
+                  "in_ruteo": "string",
+                  "out_ruteo": "",
+                  "procesado": "N",
+                  "sec_orden": 0,
+                  "rut_cli": "string",
+                  "nemo": "string",
+                  "cantidad": 0,
+                  "precio": 0,
+                  "tipo_operac": "string",
+                  "fec_ing_orden": "string",
+                  "ind_validez": "D",
+                  "fec_vcto_validez": "string",
+                  "can_asig_acum": 0,
+                  "estado": "VT",
+                  "moneda": "CLP",
+                  "bolsa": "XSGO",
+                  "condicion_liquidacion": "CN",
+                  "sponsoring_firm": "",
+                  "mercado": "AC",
+                  "sub_mercado": "string",
+                  "prepago": "",
+                  "tasa_maxima": 1,
+                  "tasa_propia": 1,
+                  "id_referencia": "",
+                  "fecha_vencimiento": "string",
+                  "divisible": "",
+                  "od": "N",
+                  "sec_orden_od_compra": 0,
+                  "sec_orden_od_venta": 0,
+                  "op_interno": "001",
+                  "sec_orden_2": "001",
+                  "id_cliente": ""
+                }
         self.name_error = False
     # ------------------------------
     # Metodos para eliminar la redundancia en el cliente
@@ -108,15 +144,15 @@ class NegociacionAPI(object):
 
         """
         
-        resp = requests.post(self.endpoint_pivot, params=self.params, headers=self.headers, json=query_params, timeout=self.timeout)
+        self.resp = requests.post(self.endpoint_pivot, params=self.params, headers=self.headers, json=query_params, timeout=self.timeout)
             
-        if resp.status_code == 200:
-             if 'listaResult' in resp.json().keys():
-                 return resp.json()['listaResult']
+        if self.resp.status_code == 200:
+             if 'listaResult' in self.resp.json().keys():
+                 return self.resp.json()['listaResult']
              else:
-                 return resp.json()
+                 return self.resp.json()
         else:
-            resp.raise_for_status()
+            self.resp.raise_for_status()
             
     def __endpoint_builder(self, endpoint: str):
         """
@@ -139,6 +175,11 @@ class NegociacionAPI(object):
             if key not in self.query_params_names:
                 logging.error(f"El parametro {key} no es valido")
                 self.name_error = True
+                
+    def __curl_checker(self, params_: dict):
+        for key, value in params_.items():
+            if key in self.order_model_json.keys():
+                self.order_model_json[key] = value
         
     # ------------------------------
     # Instrumentos disponibles en ingreso de ofertas
@@ -188,14 +229,20 @@ class NegociacionAPI(object):
             self.name_error = False
             return
         
-        return self.__handle_response()
+        return self.__handle_response(query_params=query_params)
     
     def get_revision_transaccion(self, **query_params):
-        self.__endpoint_builder('DMA/getRevisionTransaccion')
+        self.__endpoint_builder('DMA/getRevisionTransaccion')        
+        return self.__handle_response()
+    
+    def set_ingreso_oferta(self, **query_params):
+        self.__endpoint_builder('DMA/setIngresoOferta')
         self.__param_checker(items_=query_params.items())
         
         if self.name_error:
             self.name_error = False
             return
         
-        return self.__handle_response()
+        self.__curl_checker(params_=query_params)
+        
+        return self.__handle_response(query_params=self.order_model_json)
