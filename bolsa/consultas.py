@@ -12,15 +12,6 @@ import logging
 
 class ConsultasAPI(object):
     """
-    INFORMACIÓN DE MERCADO
-    Entérate de los por menores del mercado de Renta Variable con las APIs 
-    de información de mercado.
-
-    Las APIs de información de mercado te permitirán simular el uso del 
-    Market Data de Renta Variable y del cliente Market Data de Renta Variable
-    mediante el consumo de datos productivos a través de web services.
-
-
     MARKET DATA
     Un Market Data es una aplicación que mantiene en memoria el estado del 
     mercado en tiempo real. Estos reciben información sobre estados de 
@@ -33,11 +24,11 @@ class ConsultasAPI(object):
     Bolsa de Comercio de Santiago con el fin de transcribir los mensajes FIX
     enviados por el Market Data de Renta Variable a una base de datos.
     
-    FUUENTE
+    FUENTE
     https://startup.bolsadesantiago.com/#/descripcion_consulta
     """
     
-    def __init__(self, token, timeout :int=60):
+    def __init__(self, token, timeout :int=300):
         self.token = token
         self.timeout = timeout
         self.CONSULTA_HOST = 'https://startup.bolsadesantiago.com/api/consulta'
@@ -71,7 +62,7 @@ class ConsultasAPI(object):
         Parameters
         ----------
         query_params : Dict[str, str], opcional
-            DESCRIPTION. The default is {}.
+            DESCRIPTION. el default es {}.
 
         Returns
         -------
@@ -108,6 +99,19 @@ class ConsultasAPI(object):
         self.endpoint_pivot = f"{self.CONSULTA_HOST}/{endpoint}"
         
     def __param_checker(self, items_):
+        """
+        Validador de parametros para endpoints con modelos definidos.
+
+        Parameters
+        ----------
+        items_ : 
+            parametros del metodo a validar.
+
+        Returns
+        -------
+        None.
+
+        """
         for key, value in items_:
             if key not in self.query_params_names:
                 logging.error(f"El parametro {key} no es valido")
@@ -119,12 +123,8 @@ class ConsultasAPI(object):
     
     def get_instrumentos_validos(self):
         """
-        Este endpoint te permitirá conocer cuales son los instrumentos del 
-        mercado de renta variable que tendrás disponibles para utilizar en las 
-        demás APIs.
-        
-        Ten en consideración que mañana los instrumentos disponibles pueden
-        ser otros.
+        Este endpoint permite conocer cuales son los instrumentos del 
+        mercado de renta variable que estan disponibles para utilizar.
 
         Returns
         -------
@@ -194,7 +194,7 @@ class ConsultasAPI(object):
         Returns
         -------
         list
-            
+            Lista donde cada elemento es un diccionario.
 
         """
         self.__endpoint_builder("ClienteMD/getPuntasRV")
@@ -238,7 +238,7 @@ class ConsultasAPI(object):
 
         Parameters
         ----------
-        **query_params : dict, required.
+        **query_params :
             Nemo o identificador del instrumento.
 
         Returns
@@ -259,6 +259,20 @@ class ConsultasAPI(object):
         return self.__handle_response(query_params)
     
     def get_variaciones_capital(self, **query_params):
+        """
+         Variación de capital asociada a un Nemotécnico.
+
+        Parameters
+        ----------
+        **query_params :
+            nemotecnico para un instrumento.
+
+        Returns
+        -------
+        dict
+            información de la variación de capital.
+
+        """
         self.__endpoint_builder('TickerOnDemand/getVariacionesCapital')
         
         if self.name_error:
