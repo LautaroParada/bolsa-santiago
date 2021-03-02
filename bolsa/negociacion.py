@@ -171,12 +171,38 @@ class NegociacionAPI(object):
         self.endpoint_pivot = f"{self.NEGOCIACION_HOST}/{endpoint}"
         
     def __param_checker(self, items_):
+        """
+        Metodo para validar los argumentos de los metodos de la clase
+
+        Parameters
+        ----------
+        items_ : dict
+
+        Returns
+        -------
+        None.
+
+        """
         for key, value in items_:
             if key not in self.query_params_names:
                 logging.error(f"El parametro {key} no es valido")
                 self.name_error = True
                 
     def __curl_checker(self, params_: dict):
+        """
+        Metodo para validar el ingreso de ordenes. El body del request necesita
+        el modelo completo para ingresar la oferta.
+
+        Parameters
+        ----------
+        params_ : dict
+            parametros minimos para ingresar la orden.
+
+        Returns
+        -------
+        None.
+
+        """
         for key, value in params_.items():
             if key in self.order_model_json.keys():
                 self.order_model_json[key] = value
@@ -186,6 +212,14 @@ class NegociacionAPI(object):
     # ------------------------------
     
     def get_instrumentos_validos(self):
+        """
+        Instrumentos del mercado de renta variable que disponibles en la API
+
+        Returns
+        -------
+        list
+            Instrumentos de renta variable disponibles para consumir.
+        """
         self.__endpoint_builder('InstrumentosDisponibles/getInstrumentosValidos')
         return self.__handle_response()
     
@@ -211,10 +245,32 @@ class NegociacionAPI(object):
     # ------------------------------
     
     def get_puntas_rv(self):
+        """
+        Ofertas de todos los instrumentos a los cuales se les han ingresado 
+        ordenes mediante el DMA.
+
+        Returns
+        -------
+        list
+            Se muestan los precios de compra y venta, cantidad, monto, condición
+            de liquidación, entre otros.
+
+        """
         self.__endpoint_builder('ClienteMD/getPuntasRV')
         return self.__handle_response()
     
     def get_transacciones_rv(self):
+        """
+        Detalle de las transacciones de renta variable que el usuario haya 
+        realizado a traves del DMA.
+
+        Returns
+        -------
+        list
+            Precio de compra, precio de venta, cantidad, monto, condición de 
+            liquidación, entre otros.
+
+        """
         self.__endpoint_builder('ClienteMD/getTransaccionesRV')
         return self.__handle_response()
     
@@ -222,6 +278,21 @@ class NegociacionAPI(object):
     # DMA
     # ------------------------------
     def get_revision_ingreso(self, **query_params):
+        """
+        Revisión de los datos correspondientes al ingreso de ofertas a través
+        del sistema DMA.
+
+        Parameters
+        ----------
+        **query_params : sec_orden
+            número de la orden a revisar (int)
+
+        Returns
+        -------
+        dict
+            detalles de la orden ingresada.
+
+        """
         self.__endpoint_builder("DMA/getRevisionIngreso")
         self.__param_checker(items_=query_params.items())
         
@@ -231,11 +302,39 @@ class NegociacionAPI(object):
         
         return self.__handle_response(query_params=query_params)
     
-    def get_revision_transaccion(self, **query_params):
+    def get_revision_transaccion(self):
+        """
+        Revisión de los datos correspondientes a una transacción de una orden
+        ingresada por el metodo set_ingreso_oferta
+
+        Returns
+        -------
+        dict
+            detalles de la transaccion ingresada.
+
+        """
         self.__endpoint_builder('DMA/getRevisionTransaccion')        
         return self.__handle_response()
     
     def set_ingreso_oferta(self, **query_params):
+        """
+        Ingreso de ofertas para algún instrumento seleccionado.
+
+        Parameters
+        ----------
+        **query_params : multiples argumentos, todos obligatorios.
+            nemo(str): codigo del nombre del instrumentos de renta variable.
+            cantidad(int): número de instrumentos a ofertar.
+            precio(int): precio a pagar o recibir por el instrumento.
+            tipo_operac(str): C de compra, V de venta.
+            condicion_liquidacion(str): Cuando se liquida la operación.
+
+        Returns
+        -------
+        TYPE
+            DESCRIPTION.
+
+        """
         self.__endpoint_builder('DMA/setIngresoOferta')
         self.__param_checker(items_=query_params.items())
         
