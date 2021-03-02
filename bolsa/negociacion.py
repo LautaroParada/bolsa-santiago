@@ -11,13 +11,7 @@ from typing import Dict
 import logging
 
 class NegociacionAPI(object):
-    """
-    Ponemos a tu disposición un sandbox para que puedas probar el ingreso de
-    ofertas mediante DMA y experimentes cómo se distribuyen los datos en el
-    Market Data RV Negociación. Podrás ver mediante la suscripción de puntas
-    los ingresos de ofertas y el resultado de los calces de ofertas compatibles
-    en la suscripción de transacciones.
-    
+    """    
     MARKET DATA
     Un Market Data es una aplicación que mantiene en memoria el estado del 
     mercado en tiempo real. Estos reciben información sobre estados de 
@@ -134,7 +128,7 @@ class NegociacionAPI(object):
         Parameters
         ----------
         query_params : Dict[str, str], opcional
-            DESCRIPTION. The default is {}.
+            DESCRIPTION. El valor por defecto es {}.
 
         Returns
         -------
@@ -218,7 +212,8 @@ class NegociacionAPI(object):
         Returns
         -------
         list
-            Instrumentos de renta variable disponibles para consumir.
+            Lista donde cada elemento es un diccionario.
+            
         """
         self.__endpoint_builder('InstrumentosDisponibles/getInstrumentosValidos')
         return self.__handle_response()
@@ -229,7 +224,7 @@ class NegociacionAPI(object):
     
     def get_request_usuario(self):
         """
-        Número de solcitudes disponibles a realizar.
+        Número de solcitudes ocupadas y disponibles a ocupar.
 
         Returns
         -------
@@ -247,13 +242,13 @@ class NegociacionAPI(object):
     def get_puntas_rv(self):
         """
         Ofertas de todos los instrumentos a los cuales se les han ingresado 
-        ordenes mediante el DMA.
+        ordenes mediante el DMA. Se muestan los precios de compra y venta, 
+        cantidad, monto, condición de liquidación, entre otros.
 
         Returns
         -------
         list
-            Se muestan los precios de compra y venta, cantidad, monto, condición
-            de liquidación, entre otros.
+            Lista donde cada elemento es un diccionario.
 
         """
         self.__endpoint_builder('ClienteMD/getPuntasRV')
@@ -262,13 +257,13 @@ class NegociacionAPI(object):
     def get_transacciones_rv(self):
         """
         Detalle de las transacciones de renta variable que el usuario haya 
-        realizado a traves del DMA.
+        realizado a traves del DMA. Precio de compra, precio de venta, 
+        cantidad, monto, condición de liquidación, entre otros.
 
         Returns
         -------
         list
-            Precio de compra, precio de venta, cantidad, monto, condición de 
-            liquidación, entre otros.
+            Lista donde cada elemento es un diccionario.
 
         """
         self.__endpoint_builder('ClienteMD/getTransaccionesRV')
@@ -290,7 +285,7 @@ class NegociacionAPI(object):
         Returns
         -------
         dict
-            detalles de la orden ingresada.
+            Detalles de la orden ingresada.
 
         """
         self.__endpoint_builder("DMA/getRevisionIngreso")
@@ -331,8 +326,8 @@ class NegociacionAPI(object):
 
         Returns
         -------
-        TYPE
-            DESCRIPTION.
+        dict
+            .
 
         """
         self.__endpoint_builder('DMA/setIngresoOferta')
