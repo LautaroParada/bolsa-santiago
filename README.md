@@ -62,8 +62,7 @@ La API de Servicios de Consulta posee varios endpoints disponibles para su uso. 
 
 ```python
 resp = con_bs.get_indices_rv()
-print('Indices de renta variable')
-print(resp)
+print(f"Indices de renta variable\n {resp}")
 ```
 - ```get_instrumentos_rv```: Detalle de los instrumentos disponibles para transar en el mercado de renta variable. Se muestra precio de apertura, mínimos y máximos y volumen transado, entre otros.
 	
@@ -71,8 +70,7 @@ print(resp)
 
 ```python
 resp = con_bs.get_instrumentos_rv()
-print('Instrumentos de renta variable')
-print(resp)
+print(f"Instrumentos de renta variable\n {resp}")
 ```
 
 - ```get_puntas_rv```: Mejores ofertas que se encuentran ingresadas en el mercado de renta variable. Se muestra precio de compra, precio de venta, cantidad, monto, condición de liquidación, entre otros.
@@ -81,13 +79,18 @@ print(resp)
 
 ```python
 resp = con_bs.get_puntas_rv()
-print('Puntas de renta variable')
+print(f"Puntas de renta variable\n {resp}")
 ```
 
 2. **Instrumentos Disponibles**
-- ```get_instrumentos_valido```: Este endpoint permite conocer cuales son los instrumentos del mercado de renta variable que estan disponibles para utilizar.
+- ```get_instrumentos_validos```: Este endpoint permite conocer cuales son los instrumentos del mercado de renta variable que estan disponibles para utilizar.
 
 	Parametros: Ninguno.
+
+```python
+resp = con_bs.get_instrumentos_validos()
+print(f"Instrumentos validos\n {resp}")
+````
 
 3. **Request Usuario**
 4. **Ticker on Demand**
