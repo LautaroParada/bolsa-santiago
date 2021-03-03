@@ -131,7 +131,7 @@ import numpy as np
 # Solicitar los nombres de instrumentos disponibles 
 resp = con_bs.get_instrumentos_validos()
 # seleccionar alguno al azar
-ticker = con_bs.get_instrumentos_validos()[np.random.choice([0,5])]['NEMO']
+ticker = con_bs.get_instrumentos_validos()[np.random.randint(len(resp))]['NEMO']
 # solicitar el resumen del instrumento.
 resp = con_bs.get_resumen_accion(Nemo=ticker)
 print(f'Resumen de la accion de {ticker}\n {resp}')
@@ -176,7 +176,41 @@ print('-'*70)
 
 ### Documentación servicios de negociacion [:arrow_up:](#bolsa-de-santiago-startup-api)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pharetra feugiat dui eget cursus. Aliquam eu ligula non tortor auctor scelerisque. Fusce nec tincidunt ligula. Pellentesque commodo tincidunt auctor. Donec vel tellus sed metus scelerisque dapibus vel at dolor. Phasellus eleifend at mauris vehicula egestas. Aenean id purus ut sem ultrices sodales sit amet bibendum tortor.
+1. **Instrumentos disponibles en ingreso de ofertas**
+	
+- ```get_instrumentos_validos```: Instrumentos de mercado de renta variable disponibles para realizar consultas desde la API.
+
+	- **Parametros:** Ninguno
+
+```python
+resp = neg_bs.get_instrumentos_validos()
+print(f"Instrumentos validos\n {resp}")
+```
+
+2. **Request Usuario**
+
+- ```get_request_usuario```: Número de solcitudes utilizadas y disponibles a ocupar.
+
+	- **Parametros:** Ninguno
+
+```python
+resp = neg_bs.get_request_usuario()
+print(f"Request usuario\n {resp}")
+```
+
+3. **Cliente Market Data**
+
+	**Parametros:**	
+
+```python
+```
+
+4. **DMA (Direct Market Access)**
+
+	**Parametros:**
+
+```python
+```
 
 ## Disclaimer [:arrow_up:](#bolsa-de-santiago-startup-api)
 
