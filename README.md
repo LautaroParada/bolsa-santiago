@@ -246,7 +246,7 @@ nemo_precio = resp[np.random.randint(len(resp))]['PRECIO']
 
 # Ingreso de la orden
 orden_ingresada = neg_bs.set_ingreso_oferta(nemo=nemo_test, cantidad=100, precio=nemo_precio, tipo_operac='C', condicion_liquidacion='CN')
-print(f"Ingreso de la orden\n {resp}")
+print(f"Ingreso de la orden\n {orden_ingresada}")
 ```
 
 - ```get_revision_ingreso```: Revisión de los datos correspondientes al ingreso de ofertas a través del sistema DMA.
