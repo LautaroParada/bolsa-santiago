@@ -58,15 +58,16 @@ La API de Servicios de Consulta posee varios endpoints disponibles para su uso. 
 
 - ```get_indices_rv```: Valor de los principales índices de renta variable junto con su variación porcentual y volumen. 
 
-	Parametros: Ninguno
+	**Parametros:** Ninguno
 
 ```python
 resp = con_bs.get_indices_rv()
 print(f"Indices de renta variable\n {resp}")
 ```
+
 - ```get_instrumentos_rv```: Detalle de los instrumentos disponibles para transar en el mercado de renta variable. Se muestra precio de apertura, mínimos y máximos y volumen transado, entre otros.
 	
-	Parametros: Ninguno.
+	**Parametros:** Ninguno.
 
 ```python
 resp = con_bs.get_instrumentos_rv()
@@ -75,17 +76,26 @@ print(f"Instrumentos de renta variable\n {resp}")
 
 - ```get_puntas_rv```: Mejores ofertas que se encuentran ingresadas en el mercado de renta variable. Se muestra precio de compra, precio de venta, cantidad, monto, condición de liquidación, entre otros.
 	
-	Parametros: Ninguno.
+	**Parametros:** Ninguno.
 
 ```python
 resp = con_bs.get_puntas_rv()
 print(f"Puntas de renta variable\n {resp}")
 ```
 
+- ```get_transacciones_rv```: Detalle de las ultimas transacciones de los instrumentos disponibles en renta variable. Se muestra instrumento, condición de liquidación y cantidad, entre otros.
+
+	**Parametros:** Ninguno.
+
+```python
+resp = con_bs.get_transacciones_rv()
+print(f"Transacciones de renta variable\n {resp}")
+````
+
 2. **Instrumentos Disponibles**
 - ```get_instrumentos_validos```: Este endpoint permite conocer cuales son los instrumentos del mercado de renta variable que estan disponibles para utilizar.
 
-	Parametros: Ninguno.
+	**Parametros:** Ninguno.
 
 ```python
 resp = con_bs.get_instrumentos_validos()
@@ -93,8 +103,49 @@ print(f"Instrumentos validos\n {resp}")
 ````
 
 3. **Request Usuario**
-4. **Ticker on Demand**
+- ```get_request_usuario```: Número de solcitudes disponibles a realizar y limite diario.
 
+	**Parametros:** Ninguno.
+
+```python
+resp = con_bs.get_request_usuario()
+print(f"Solicitudes del usuario\n {resp}")
+```
+4. **Ticker on Demand**
+- ```get_indices```: Información sobre los indices que trazan la actividad comercial de la bolsa de stgo. Se muestra el nombre del índice, el valor actual, el mayor y menor valor del día y la variación porcentual.
+
+	**Parametros:** Ninguno.
+
+```python 
+resp = con_bs.get_indices()
+print(f"Indices de la Bolsa de Santiago\n {resp}")
+```
+
+- ```get_resumen_accion```: Información bursátil detallada de alguna instrumento/acción en particular.
+
+	**Parametros:**
+	- ```Nemo```(str): Nemotecnico o nombre del simbolo del instrumento a analizar.
+
+```python
+# Solicitar los nombres de instrumentos disponibles 
+resp = con_bs.get_instrumentos_validos()
+# seleccionar alguno al azar
+ticker = con_bs.get_instrumentos_validos()[np.random.choice([0,5])]['NEMO']
+# solicitar el resumen del instrumento.
+resp = con_bs.get_resumen_accion(Nemo=ticker)
+print(f'Resumen de la accion de {ticker}\n {resp}')
+```
+
+- ```get_variaciones_capital```: Variación de capital asociada a un Nemotécnico/nombre del instrumento en particular. ***Este metodo esta en estado BETA, dado que el equipo que soporta la API tiene inconvenientes tecnicos para este endpoint***.
+
+	**Parametros:**
+	- ```Fecha_Desde```(str): Inicio de la fecha para solicitar variación de capital. El formato es el siguiente YYYYmmDDhhMMss
+	- ```Fecha_Hasta```(str): Fin de la fecha para solicitar variación de capital. El formato es el siguiente YYYYmmDDhhMMss
+
+```python
+resp = con_bs.get_variaciones_capital(Nemo=ticker, Fecha_Desde='2021020111000000', Fecha_Hasta='2021020411000000')
+print(f"Variacion de capital para {ticker}\n {resp}")
+```
 ## Demo Servicios de Negociación [:arrow_up:](#bolsa-de-santiago-startup-api)
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pharetra feugiat dui eget cursus. Aliquam eu ligula non tortor auctor scelerisque. Fusce nec tincidunt ligula. Pellentesque commodo tincidunt auctor. Donec vel tellus sed metus scelerisque dapibus vel at dolor. Phasellus eleifend at mauris vehicula egestas. Aenean id purus ut sem ultrices sodales sit amet bibendum tortor.
