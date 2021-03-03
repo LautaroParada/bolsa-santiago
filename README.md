@@ -27,7 +27,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pharetra feugiat dui
 Los endpoints de las APIs de información de mercado te permitirán simular el uso del de datos de mercado de instrumentos de renta variable, a través del consumo de un **web-service**. A continuación un demo de su uso:
 
 ```python
-
 import os
 from bolsa.consultas import ConsultasAPI # Cliente de la API Servicios de Consulta
 
@@ -127,6 +126,8 @@ print(f"Indices de la Bolsa de Santiago\n {resp}")
 	- ```Nemo```(str): Nemotecnico o nombre del simbolo del instrumento a analizar.
 
 ```python
+import numpy as np
+
 # Solicitar los nombres de instrumentos disponibles 
 resp = con_bs.get_instrumentos_validos()
 # seleccionar alguno al azar
@@ -148,7 +149,30 @@ print(f"Variacion de capital para {ticker}\n {resp}")
 ```
 ## Demo Servicios de Negociación [:arrow_up:](#bolsa-de-santiago-startup-api)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pharetra feugiat dui eget cursus. Aliquam eu ligula non tortor auctor scelerisque. Fusce nec tincidunt ligula. Pellentesque commodo tincidunt auctor. Donec vel tellus sed metus scelerisque dapibus vel at dolor. Phasellus eleifend at mauris vehicula egestas. Aenean id purus ut sem ultrices sodales sit amet bibendum tortor.
+Los endpoints de las APIs de ingreso de ofertas te permitirán el ingreso de ofertas mediante **DMA** y experimentar cómo se distribuyen los datos en el mercado de negociaciones de instrumentos financieros. A continuación un demo de su uso:
+
+```python
+import os
+from bolsa.negociacion import NegociacionAPI
+
+# cargar la api key desde las variables de entorno del sistma
+api_key = os.environ['API_BS']
+
+# Creación de la instancia que manipulara las solicitudes a la API
+neg_bs = NegociacionAPI(token=api_key)
+
+# Instrumentos validos o disponibles para el usuario
+resp = neg_bs.get_instrumentos_validos()
+print('Instrumentos validos - NEGOCIACION API')
+print(resp)
+print('-'*70)
+
+# Número de solicitudes utilizadas y disponibles para el usuario
+resp = neg_bs.get_request_usuario()
+print('Request usuario - NEGOCIACION API')
+print(resp)
+print('-'*70)
+```
 
 ### Documentación servicios de negociacion [:arrow_up:](#bolsa-de-santiago-startup-api)
 
