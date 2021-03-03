@@ -122,7 +122,7 @@ print(f"Indices de la Bolsa de Santiago\n {resp}")
 
 - ```get_resumen_accion```: Información bursátil detallada de alguna instrumento/acción en particular.
 
-	**Parametros:**
+	**Parametros:** *Obligatorios*
 	- ```Nemo```(str): Nemotecnico o nombre del simbolo del instrumento a analizar.
 
 ```python
@@ -139,7 +139,8 @@ print(f'Resumen de la accion de {ticker}\n {resp}')
 
 - ```get_variaciones_capital```: Variación de capital asociada a un Nemotécnico/nombre del instrumento en particular. ***Este metodo esta en estado BETA, dado que el equipo que soporta la API tiene inconvenientes tecnicos para este endpoint***.
 
-	**Parametros:**
+	**Parametros:** *Obligatorios*
+	- ```Nemo```(str): Nemotecnico o nombre del simbolo del instrumento a analizar.
 	- ```Fecha_Desde```(str): Inicio de la fecha para solicitar variación de capital. El formato es el siguiente YYYYmmDDhhMMss
 	- ```Fecha_Hasta```(str): Fin de la fecha para solicitar variación de capital. El formato es el siguiente YYYYmmDDhhMMss
 
@@ -198,18 +199,73 @@ resp = neg_bs.get_request_usuario()
 print(f"Request usuario\n {resp}")
 ```
 
-3. **Cliente Market Data**
+3. **Cliente Market Data**: El Cliente Market Data Renta Variable es un producto creado por la Bolsa de Comercio de Santiago con el fin de transcribir los mensajes FIX enviados por el Market Data de Renta Variable a una base de datos.
 
-	**Parametros:**	
+*fuente: [Bolsa de Santiago](https://startup.bolsadesantiago.com/#/descripcion_negociacion)*
+
+- ```get_puntas_rv```: Mejor oferta del libro de ordenes para cada instrumento (***compra mas cara, venta mas barata***). Estas ofertas fueron ingresada mediante el **sitema DMA**. Se muestan los precios de compra y venta, cantidad, monto, condición de liquidación, entre otros.
+
+	- **Parametros:** Ninguno
 
 ```python
+resp = neg_bs.get_puntas_rv()
+print(f"Puntas de negociacion para renta variable\n {resp}")
 ```
 
-4. **DMA (Direct Market Access)**
+- ```get_transacciones_rv```: Detalle de las transacciones de renta variable que el usuario ha realizado a traves del sistema DMA. Precio de compra, precio de venta, cantidad, monto, condición de liquidación, entre otros.
 
-	**Parametros:**
+	- **Parametros:** Ninguno
 
 ```python
+resp = neg_bs.get_transacciones_rv()
+print(f"Transacciones del mercado\n {resp}")
+```
+
+4. **DMA (Direct Market Access):** Los servicios DMA - Direct Market Acces - permiten la canalización o ruteo automático de órdenes de compra y venta de acciones en tiempo real, al sistema SEBRA HT.
+
+*fuente: [Bolsa de Santiago](https://startup.bolsadesantiago.com/#/descripcion_negociacion)*
+
+- ```set_ingreso_oferta```: Ingreso de ofertas para algún instrumento seleccionado.
+
+	- **Parametros:** *Obligatorios*
+	   ```nemo```(str): codigo del nombre del instrumentos de renta variable.
+       ```cantidad```(int): número de instrumentos a ofertar.
+       ```precio```(int): precio a pagar o recibir por el instrumento.
+       ```tipo_operac```(str): C de compra, V de venta.
+       ```condicion_liquidacion```(str): Cuando se liquida la operación, las opciones disponbles son CN, PH o PM.
+
+```python
+import numpy as np
+
+# Instrumentos validos o disponibles para el usuario
+resp = neg_bs.get_instrumentos_validos()
+
+# Muestra aleatoria para el ingreso de ordenes
+nemo_test = resp[np.random.randint(len(resp))]['NEMO']
+nemo_precio = resp[np.random.randint(len(resp))]['PRECIO']
+
+# Ingreso de la orden
+orden_ingresada = neg_bs.set_ingreso_oferta(nemo=nemo_test, cantidad=100, precio=nemo_precio, tipo_operac='C', condicion_liquidacion='CN')
+print(f"Ingreso de la orden\n {resp}")
+```
+
+- ```get_revision_ingreso```: Revisión de los datos correspondientes al ingreso de ofertas a través del sistema DMA.
+
+	- **Parametros:**
+	```sec_orden```(int): número de la orden a revisar
+
+```python
+resp = neg_bs.get_revision_ingreso(sec_orden=orden_ingresada['SEC_ORDEN'])
+print(f"Detalles de la orden ingresada:\n {resp}")
+```
+
+- ```get_revision_transaccion```: Revisión de los datos correspondientes a una transacción de una orden ingresada por el metodo ```set_ingreso_oferta```
+
+	- **Parametros:** Ninguno
+
+```python
+resp = neg_bs.get_revision_transaccion()
+print(f"Revision de las transacciones\n {resp}")
 ```
 
 ## Disclaimer [:arrow_up:](#bolsa-de-santiago-startup-api)
