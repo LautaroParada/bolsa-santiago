@@ -49,24 +49,26 @@ print(resp)
 print('-'*70)
 ```
 
+*tutorial sobre como guardar y cargar variables de entorno en Python -> [Hiding Passwords and Secret Keys in Environment Variables (Windows)](https://youtu.be/IolxqkL7cD8)*
+
 ### Documentación servicios de consulta [:arrow_up:](#bolsa-de-santiago-startup-api)
 
-La API de Servicios de Consulta posee varios endpoints disponibles para su uso. A continuación se explicara los metodos del cliente que estandarizan las solicitudes a la API.
+La API de Servicios de Consulta posee varios endpoints disponibles para su uso. A continuación se explicaran los métodos del cliente que estandarizan las solicitudes a la API.
 
-1. **Client Market Data:** Un Market Data es una aplicación que mantiene en memoria el estado del mercado en tiempo real. Estos reciben información sobre estados de negociación, puntas, profundidad, resumen del mercado, entre otros, para posteriormente distribuirla al mercado. Todo este tipo de información se envía mediante protocolo FIX. Entre los metodos dispobles se encuentran: 
+1. **Client Market Data:** UUn Market Data es una aplicación que mantiene en memoria el estado del mercado en tiempo real. Se recibe información sobre estados de negociación, puntas de cotización, profundidad del libro de órdenes, resumen o snapshot del mercado, entre otros. Todo esta información se envía mediante protocolo **FIX**. Los métodos disponibles para realizar consultas son:
 
 - ```get_indices_rv```: Valor de los principales índices de renta variable junto con su variación porcentual y volumen. 
 
-	**Parametros:** Ninguno
+	**Parámetros:** Ninguno
 
 ```python
 resp = con_bs.get_indices_rv()
 print(f"Indices de renta variable\n {resp}")
 ```
 
-- ```get_instrumentos_rv```: Detalle de los instrumentos disponibles para transar en el mercado de renta variable. Se muestra precio de apertura, mínimos y máximos y volumen transado, entre otros.
+- ```get_instrumentos_rv```: Detalle de los instrumentos disponibles para transar en el mercado de renta variable. Se muestra el precio de apertura, mínimos y máximos y volumen transado, entre otros.
 	
-	**Parametros:** Ninguno.
+	**Parámetros:** Ninguno.
 
 ```python
 resp = con_bs.get_instrumentos_rv()
@@ -75,7 +77,7 @@ print(f"Instrumentos de renta variable\n {resp}")
 
 - ```get_puntas_rv```: Mejores ofertas que se encuentran ingresadas en el mercado de renta variable. Se muestra precio de compra, precio de venta, cantidad, monto, condición de liquidación, entre otros.
 	
-	**Parametros:** Ninguno.
+	**Parámetros:** Ninguno.
 
 ```python
 resp = con_bs.get_puntas_rv()
@@ -84,7 +86,7 @@ print(f"Puntas de renta variable\n {resp}")
 
 - ```get_transacciones_rv```: Detalle de las ultimas transacciones de los instrumentos disponibles en renta variable. Se muestra instrumento, condición de liquidación y cantidad, entre otros.
 
-	**Parametros:** Ninguno.
+	**Parámetros:** Ninguno.
 
 ```python
 resp = con_bs.get_transacciones_rv()
@@ -94,7 +96,7 @@ print(f"Transacciones de renta variable\n {resp}")
 2. **Instrumentos Disponibles**
 - ```get_instrumentos_validos```: Este endpoint permite conocer cuales son los instrumentos del mercado de renta variable que estan disponibles para utilizar.
 
-	**Parametros:** Ninguno.
+	**Parámetros:** Ninguno.
 
 ```python
 resp = con_bs.get_instrumentos_validos()
@@ -104,7 +106,7 @@ print(f"Instrumentos validos\n {resp}")
 3. **Request Usuario**
 - ```get_request_usuario```: Número de solcitudes disponibles a realizar y limite diario.
 
-	**Parametros:** Ninguno.
+	**Parámetros:** Ninguno.
 
 ```python
 resp = con_bs.get_request_usuario()
@@ -113,7 +115,7 @@ print(f"Solicitudes del usuario\n {resp}")
 4. **Ticker on Demand**
 - ```get_indices```: Información sobre los indices que trazan la actividad comercial de la bolsa de stgo. Se muestra el nombre del índice, el valor actual, el mayor y menor valor del día y la variación porcentual.
 
-	**Parametros:** Ninguno.
+	**Parámetros:** Ninguno.
 
 ```python 
 resp = con_bs.get_indices()
@@ -122,7 +124,7 @@ print(f"Indices de la Bolsa de Santiago\n {resp}")
 
 - ```get_resumen_accion```: Información bursátil detallada de alguna instrumento/acción en particular.
 
-	**Parametros:** *Obligatorios*
+	**Parámetros:** *Obligatorios*
 	- ```Nemo```(str): Nemotecnico o nombre del simbolo del instrumento a analizar.
 
 ```python
@@ -139,7 +141,7 @@ print(f'Resumen de la accion de {ticker}\n {resp}')
 
 - ```get_variaciones_capital```: Variación de capital asociada a un Nemotécnico/nombre del instrumento en particular. ***Este metodo esta en estado BETA, dado que el equipo que soporta la API tiene inconvenientes tecnicos para este endpoint***.
 
-	**Parametros:** *Obligatorios*
+	**Parámetros:** *Obligatorios*
 	- ```Nemo```(str): Nemotecnico o nombre del simbolo del instrumento a analizar.
 	- ```Fecha_Desde```(str): Inicio de la fecha para solicitar variación de capital. El formato es el siguiente YYYYmmDDhhMMss
 	- ```Fecha_Hasta```(str): Fin de la fecha para solicitar variación de capital. El formato es el siguiente YYYYmmDDhhMMss
@@ -175,13 +177,15 @@ print(resp)
 print('-'*70)
 ```
 
+*tutorial sobre como guardar y cargar variables de entorno en Python -> [Hiding Passwords and Secret Keys in Environment Variables (Windows)](https://youtu.be/IolxqkL7cD8)*
+
 ### Documentación servicios de negociacion [:arrow_up:](#bolsa-de-santiago-startup-api)
 
 1. **Instrumentos disponibles en ingreso de ofertas**
 	
 - ```get_instrumentos_validos```: Instrumentos de mercado de renta variable disponibles para realizar consultas desde la API.
 
-	- **Parametros:** Ninguno
+	- **Parámetros:** Ninguno
 
 ```python
 resp = neg_bs.get_instrumentos_validos()
@@ -192,7 +196,7 @@ print(f"Instrumentos validos\n {resp}")
 
 - ```get_request_usuario```: Número de solcitudes utilizadas y disponibles a ocupar.
 
-	- **Parametros:** Ninguno
+	- **Parámetros:** Ninguno
 
 ```python
 resp = neg_bs.get_request_usuario()
@@ -205,7 +209,7 @@ print(f"Request usuario\n {resp}")
 
 - ```get_puntas_rv```: Mejor oferta del libro de ordenes para cada instrumento (***compra mas cara, venta mas barata***). Estas ofertas fueron ingresada mediante el **sitema DMA**. Se muestan los precios de compra y venta, cantidad, monto, condición de liquidación, entre otros.
 
-	- **Parametros:** Ninguno
+	- **Parámetros:** Ninguno
 
 ```python
 resp = neg_bs.get_puntas_rv()
@@ -214,7 +218,7 @@ print(f"Puntas de negociacion para renta variable\n {resp}")
 
 - ```get_transacciones_rv```: Detalle de las transacciones de renta variable que el usuario ha realizado a traves del sistema DMA. Precio de compra, precio de venta, cantidad, monto, condición de liquidación, entre otros.
 
-	- **Parametros:** Ninguno
+	- **Parámetros:** Ninguno
 
 ```python
 resp = neg_bs.get_transacciones_rv()
@@ -227,7 +231,7 @@ print(f"Transacciones del mercado\n {resp}")
 
 - ```set_ingreso_oferta```: Ingreso de ofertas para algún instrumento seleccionado.
 
-	- **Parametros:** *Obligatorios*
+	- **Parámetros:** *Obligatorios*
 	   ```nemo```(str): codigo del nombre del instrumentos de renta variable.
        ```cantidad```(int): número de instrumentos a ofertar.
        ```precio```(int): precio a pagar o recibir por el instrumento.
@@ -251,7 +255,7 @@ print(f"Ingreso de la orden\n {orden_ingresada}")
 
 - ```get_revision_ingreso```: Revisión de los datos correspondientes al ingreso de ofertas a través del sistema DMA.
 
-	- **Parametros:**
+	- **Parámetros:**
 	```sec_orden```(int): número de la orden a revisar
 
 ```python
@@ -261,7 +265,7 @@ print(f"Detalles de la orden ingresada:\n {resp}")
 
 - ```get_revision_transaccion```: Revisión de los datos correspondientes a una transacción de una orden ingresada por el metodo ```set_ingreso_oferta```
 
-	- **Parametros:** Ninguno
+	- **Parámetros:** Ninguno
 
 ```python
 resp = neg_bs.get_revision_transaccion()
