@@ -75,7 +75,7 @@ resp = con_bs.get_instrumentos_rv()
 print(f"Instrumentos de renta variable\n {resp}")
 ```
 
-- ```get_puntas_rv```: Mejores ofertas que se encuentran ingresadas en el mercado de renta variable. Se muestra precio de compra, precio de venta, cantidad, monto, condición de liquidación, entre otros.
+- ```get_puntas_rv```: Mejores ofertas que se encuentran ingresadas en el mercado de renta variable (compra más cara y venta barata). Se muestra precio de compra, precio de venta, cantidad, monto, condición de liquidación, entre otros.
 	
 	**Parámetros:** Ninguno.
 
@@ -94,7 +94,7 @@ print(f"Transacciones de renta variable\n {resp}")
 ````
 
 2. **Instrumentos Disponibles**
-- ```get_instrumentos_validos```: Este endpoint permite conocer cuales son los instrumentos del mercado de renta variable que estan disponibles para utilizar.
+- ```get_instrumentos_validos```: Permite conocer cuales son los instrumentos del mercado de renta variable que estan disponibles para utilizar.
 
 	**Parámetros:** Ninguno.
 
@@ -113,7 +113,7 @@ resp = con_bs.get_request_usuario()
 print(f"Solicitudes del usuario\n {resp}")
 ```
 4. **Ticker on Demand**
-- ```get_indices```: Información sobre los indices que trazan la actividad comercial de la bolsa de stgo. Se muestra el nombre del índice, el valor actual, el mayor y menor valor del día y la variación porcentual.
+- ```get_indices```: Información sobre los índices que trazan la actividad comercial de la Bolsa de Santiago. Se muestra el nombre del índice, el valor actual, el mayor y menor valor del día y la variación porcentual.
 
 	**Parámetros:** Ninguno.
 
@@ -125,7 +125,7 @@ print(f"Indices de la Bolsa de Santiago\n {resp}")
 - ```get_resumen_accion```: Información bursátil detallada de alguna instrumento/acción en particular.
 
 	**Parámetros:** *Obligatorios*
-	- ```Nemo```(str): Nemotecnico o nombre del simbolo del instrumento a analizar.
+	- ```Nemo```(str): Nemotécnico o nombre del símbolo del instrumento a analizar.
 
 ```python
 import numpy as np
@@ -139,7 +139,7 @@ resp = con_bs.get_resumen_accion(Nemo=ticker)
 print(f'Resumen de la accion de {ticker}\n {resp}')
 ```
 
-- ```get_variaciones_capital```: Variación de capital asociada a un Nemotécnico/nombre del instrumento en particular. ***Este metodo esta en estado BETA, dado que el equipo que soporta la API tiene inconvenientes tecnicos para este endpoint***.
+- ```get_variaciones_capital```: Variación de capital asociada a un Nemotécnico/nombre del instrumento en particular. ***Este método está en estado BETA, dado que el equipo que soporta la API tiene inconvenientes técnicos para este endpoint.***
 
 	**Parámetros:** *Obligatorios*
 	- ```Nemo```(str): Nemotecnico o nombre del simbolo del instrumento a analizar.
