@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 HERE = pathlib.Path(__file__).parent
 
-VERSION = '0.1.4'
+VERSION = '0.1.0'
 PACKAGE_NAME = 'bolsa_stgo'
 AUTHOR = 'Lautaro Parada Opazo'
 AUTHOR_EMAIL = 'lautaro.parada.opazo@gmail.com'
@@ -14,11 +14,7 @@ DESCRIPTION = 'SDK de la API de la bolsa de Santiago.'
 LONG_DESCRIPTION = (HERE / "README.md").read_text()
 LONG_DESC_TYPE = "text/markdown"
 
-INSTALL_REQUIRES = [
-      'requests', 
-      'logging', 
-      'typing'
-]
+INSTALL_REQUIRES = []
 
 setup(name=PACKAGE_NAME,
       version=VERSION,
