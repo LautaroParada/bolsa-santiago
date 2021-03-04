@@ -152,13 +152,13 @@ print(f"Variacion de capital para {ticker}\n {resp}")
 ```
 ## Demo Servicios de Negociación [:arrow_up:](#bolsa-de-santiago-startup-api)
 
-Los endpoints de las APIs de ingreso de ofertas te permitirán el ingreso de ofertas mediante **DMA** y experimentar cómo se distribuyen los datos en el mercado de negociaciones de instrumentos financieros. A continuación un demo de su uso:
+Los endpoints de las APIs de ingreso de ofertas te permitirán el ingresar ofertas mediante el sistema **DMA** y experimentar cómo se distribuyen los datos en el mercado de negociaciones de instrumentos financieros. A continuación un demo de su uso:
 
 ```python
 import os
 from bolsa.negociacion import NegociacionAPI
 
-# cargar la api key desde las variables de entorno del sistma
+# Cargar la api key desde las variables de entorno del sistma
 api_key = os.environ['API_BS']
 
 # Creación de la instancia que manipulara las solicitudes a la API
@@ -183,7 +183,7 @@ print('-'*70)
 
 1. **Instrumentos disponibles en ingreso de ofertas**
 	
-- ```get_instrumentos_validos```: Instrumentos de mercado de renta variable disponibles para realizar consultas desde la API.
+- ```get_instrumentos_validos```: Instrumentos de mercado de renta variable disponibles para ingresar ordenes.
 
 	- **Parámetros:** Ninguno
 
@@ -203,11 +203,11 @@ resp = neg_bs.get_request_usuario()
 print(f"Request usuario\n {resp}")
 ```
 
-3. **Cliente Market Data**: El Cliente Market Data Renta Variable es un producto creado por la Bolsa de Comercio de Santiago con el fin de transcribir los mensajes FIX enviados por el Market Data de Renta Variable a una base de datos.
+3. **Cliente Market Data**: El Market Data Renta Variable es un producto creado por la Bolsa de Comercio de Santiago con el fin de transcribir los mensajes FIX enviados por el Market Data de Renta Variable a una base de datos.
 
 *fuente: [Bolsa de Santiago](https://startup.bolsadesantiago.com/#/descripcion_negociacion)*
 
-- ```get_puntas_rv```: Mejor oferta del libro de ordenes para cada instrumento (***compra mas cara, venta mas barata***). Estas ofertas fueron ingresada mediante el **sitema DMA**. Se muestan los precios de compra y venta, cantidad, monto, condición de liquidación, entre otros.
+- ```get_puntas_rv```: Mejor oferta del libro de órdenes para cada instrumento (***compra más cara, venta más barata***). Estas ofertas fueron ingresada mediante el **sistema DMA**. Se muestran los precios de compra y venta, cantidad, monto, condición de liquidación, entre otros.
 
 	- **Parámetros:** Ninguno
 
@@ -216,7 +216,7 @@ resp = neg_bs.get_puntas_rv()
 print(f"Puntas de negociacion para renta variable\n {resp}")
 ```
 
-- ```get_transacciones_rv```: Detalle de las transacciones de renta variable que el usuario ha realizado a traves del sistema DMA. Precio de compra, precio de venta, cantidad, monto, condición de liquidación, entre otros.
+- ```get_transacciones_rv```: Detalle de las transacciones de renta variable que el usuario ha realizado a través del sistema DMA. Precio de compra, precio de venta, cantidad, monto, condición de liquidación, entre otros.
 
 	- **Parámetros:** Ninguno
 
@@ -225,18 +225,18 @@ resp = neg_bs.get_transacciones_rv()
 print(f"Transacciones del mercado\n {resp}")
 ```
 
-4. **DMA (Direct Market Access):** Los servicios DMA - Direct Market Acces - permiten la canalización o ruteo automático de órdenes de compra y venta de acciones en tiempo real, al sistema SEBRA HT.
+4. **DMA (Direct Market Access):** Los servicios **DMA** - Direct Market Access - permiten la canalización o ruteo automático de órdenes de compra y venta de acciones en tiempo real, al sistema **SEBRA HT**.
 
 *fuente: [Bolsa de Santiago](https://startup.bolsadesantiago.com/#/descripcion_negociacion)*
 
 - ```set_ingreso_oferta```: Ingreso de ofertas para algún instrumento seleccionado.
 
 	- **Parámetros:** *Obligatorios*
-	   ```nemo```(str): codigo del nombre del instrumentos de renta variable.
-       ```cantidad```(int): número de instrumentos a ofertar.
-       ```precio```(int): precio a pagar o recibir por el instrumento.
+	   ```nemo```(str): Código  del nombre del instrumentos de renta variable.
+       ```cantidad```(int): Número de instrumentos a ofertar.
+       ```precio```(int): Precio a pagar o recibir por el instrumento.
        ```tipo_operac```(str): C de compra, V de venta.
-       ```condicion_liquidacion```(str): Cuando se liquida la operación, las opciones disponbles son CN, PH o PM.
+       ```condicion_liquidacion```(str): Cuando se liquida la operación, las opciones disponibles son CN, PH o PM.
 
 ```python
 import numpy as np
@@ -263,7 +263,7 @@ resp = neg_bs.get_revision_ingreso(sec_orden=orden_ingresada['SEC_ORDEN'])
 print(f"Detalles de la orden ingresada:\n {resp}")
 ```
 
-- ```get_revision_transaccion```: Revisión de los datos correspondientes a una transacción de una orden ingresada por el metodo ```set_ingreso_oferta```
+- ```get_revision_transaccion```: Revisión de los datos correspondientes a una transacción de una orden ingresada por el método ```set_ingreso_oferta```
 
 	- **Parámetros:** Ninguno
 
