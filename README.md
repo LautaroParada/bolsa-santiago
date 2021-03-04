@@ -21,12 +21,12 @@ Cliente de la [API](https://startup.bolsadesantiago.com/#/) de la bolsa de Santi
 ## Instalación y requisitos [:arrow_up:](#bolsa-de-santiago-startup-api)
 
 #### Requisitos
-- Se debe solicitar una api key con el equipo que mantiene la API. Para aquello deben ir al siguiente [link]()
+- Se debe solicitar una api key con el equipo que mantiene la API. Para aquello deben ir al siguiente [link](https://startup.bolsadesantiago.com/#/)
 - ```Python``` >= 3.8
 
 #### Instalación
 ```python
-pip install bolsa_stgo
+pip install bolsa-stgo
 ```
 
 ## Demo Servicios de Consulta [:arrow_up:](#bolsa-de-santiago-startup-api)
