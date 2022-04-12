@@ -132,7 +132,7 @@ print(f"Indices de la Bolsa de Santiago\n {resp}")
 - ```get_resumen_accion```: Información bursátil detallada de alguna instrumento/acción en particular.
 
 	**Parámetros:** *Obligatorios*
-	- ```Nemo```(str): Nemotécnico o nombre del símbolo del instrumento a analizar.
+	- ```Nemo```(str): **Requerido** - Nemotécnico o nombre del símbolo del instrumento a analizar.
 
 ```python
 import numpy as np
@@ -149,9 +149,9 @@ print(f'Resumen de la accion de {ticker}\n {resp}')
 - ```get_variaciones_capital```: Variación de capital asociada a un Nemotécnico/nombre del instrumento en particular. ***Este método está en estado BETA, dado que el equipo que soporta la API tiene inconvenientes técnicos para este endpoint.***
 
 	**Parámetros:** *Obligatorios*
-	- ```Nemo```(str): Nemotecnico o nombre del simbolo del instrumento a analizar.
-	- ```Fecha_Desde```(str): Inicio de la fecha para solicitar variación de capital. El formato es el siguiente YYYYmmDDhhMMss
-	- ```Fecha_Hasta```(str): Fin de la fecha para solicitar variación de capital. El formato es el siguiente YYYYmmDDhhMMss
+	- ```Nemo```(str): **Requerido** - Nemotecnico o nombre del simbolo del instrumento a analizar.
+	- ```Fecha_Desde```(str): **Requerido** - Inicio de la fecha para solicitar variación de capital. El formato es el siguiente YYYYmmDDhhMMss
+	- ```Fecha_Hasta```(str): **Requerido** - Fin de la fecha para solicitar variación de capital. El formato es el siguiente YYYYmmDDhhMMss
 
 ```python
 resp = con_bs.get_variaciones_capital(Nemo=ticker, Fecha_Desde='2021020111000000', Fecha_Hasta='2021020411000000')
@@ -239,11 +239,11 @@ print(f"Transacciones del mercado\n {resp}")
 - ```set_ingreso_oferta```: Ingreso de ofertas para algún instrumento seleccionado.
 
 	- **Parámetros:** *Obligatorios*
-	   ```nemo```(str): Código  del nombre del instrumentos de renta variable.
-       ```cantidad```(int): Número de instrumentos a ofertar.
-       ```precio```(int): Precio a pagar o recibir por el instrumento.
-       ```tipo_operac```(str): C de compra, V de venta.
-       ```condicion_liquidacion```(str): Cuando se liquida la operación, las opciones disponibles son CN, PH o PM.
+	   - ```nemo```(str): Código  del nombre del instrumentos de renta variable.
+       - ```cantidad```(int): Número de instrumentos a ofertar.
+       - ```precio```(int): Precio a pagar o recibir por el instrumento.
+       - ```tipo_operac```(str): C de compra, V de venta.
+       - ```condicion_liquidacion```(str): Cuando se liquida la operación, las opciones disponibles son CN, PH o PM.
 
 ```python
 import numpy as np
@@ -252,18 +252,25 @@ import numpy as np
 resp = neg_bs.get_instrumentos_validos()
 
 # Muestra aleatoria para el ingreso de ordenes
-nemo_test = resp[np.random.randint(len(resp))]['NEMO']
-nemo_precio = resp[np.random.randint(len(resp))]['PRECIO']
+# Elegir aleatoriamente una accion y su ultimo precio de transaccion para
+# ingresar una orden
+random_ticker = np.random.randint(len(resp))
+nemo_test = resp[random_ticker]['NEMO']
+nemo_precio = resp[random_ticker]['PRECIO']
 
-# Ingreso de la orden
-orden_ingresada = neg_bs.set_ingreso_oferta(nemo=nemo_test, cantidad=100, precio=nemo_precio, tipo_operac='C', condicion_liquidacion='CN')
+# Ingreso de una orden de venta a precio mercado de un tamaño de 100 acciones
+orden_ingresada = neg_bs.set_ingreso_oferta(nemo=nemo_test, 
+                                            cantidad=100, 
+                                            precio=nemo_precio, 
+                                            tipo_operac='V', 
+                                            condicion_liquidacion='PM')
 print(f"Ingreso de la orden\n {orden_ingresada}")
 ```
 
 - ```get_revision_ingreso```: Revisión de los datos correspondientes al ingreso de ofertas a través del sistema DMA.
 
 	- **Parámetros:**
-	```sec_orden```(int): número de la orden a revisar
+		- ```sec_orden```(int): **Requerido** - número de la orden a revisar
 
 ```python
 resp = neg_bs.get_revision_ingreso(sec_orden=orden_ingresada['SEC_ORDEN'])
